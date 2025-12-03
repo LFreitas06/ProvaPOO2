@@ -1,5 +1,4 @@
 package Questao1;
-
 import java.util.ArrayList;
 
 public class cursoEspecializacao extends curso {
@@ -7,7 +6,7 @@ public class cursoEspecializacao extends curso {
     private double adicionalDiploma;
 
     public cursoEspecializacao(int codigo, int cargaHoraria, int sala, String nome, String nomeProfessor, double valorCurso, ArrayList<aluno> alunos, boolean latoSensu){
-        super( codigo, cargaHoraria, sala, nome, nomeProfessor, valorCurso,  alunos);
+        super(codigo, cargaHoraria, sala, nome, nomeProfessor, valorCurso, alunos);
         this.latoSensu = latoSensu;
     }
 
@@ -26,5 +25,10 @@ public class cursoEspecializacao extends curso {
 
     public double getAdicionalDiploma() {
         return this.adicionalDiploma;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " | Especialização (Lato Sensu: " + latoSensu + ") | Adicional: R$ " + adicionalDiploma;
     }
 }

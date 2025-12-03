@@ -1,5 +1,4 @@
 package Questao1;
-
 import java.util.ArrayList;
 
 public class cursoMestrado extends curso{
@@ -7,13 +6,14 @@ public class cursoMestrado extends curso{
     private double adicionalDiploma;
 
     public cursoMestrado(int codigo, int cargaHoraria, int sala, String nome, String nomeProfessor, double valorCurso, ArrayList<aluno> alunos, boolean strictoSensu){
-        super( codigo, cargaHoraria, sala, nome, nomeProfessor, valorCurso,  alunos);
+        super(codigo, cargaHoraria, sala, nome, nomeProfessor, valorCurso, alunos);
         this.strictoSensu = strictoSensu;
     }
 
     public void setAdicionalDiploma(){
         int qtdAlunos = this.getAlunos().size();
         double valorPorAluno;
+
         if (qtdAlunos <= 5) {
             valorPorAluno = 45.00;
         } else if (qtdAlunos <= 15) {
@@ -23,9 +23,16 @@ public class cursoMestrado extends curso{
         } else {
             valorPorAluno = 36.00;
         }
+
+        this.adicionalDiploma = qtdAlunos * valorPorAluno;
     }
 
     public double getAdicionalDiploma() {
         return this.adicionalDiploma;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " | Mestrado (Stricto Sensu: " + strictoSensu + ") | Adicional: R$ " + adicionalDiploma;
     }
 }

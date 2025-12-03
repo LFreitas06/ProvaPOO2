@@ -1,36 +1,87 @@
 package Questao1;
+
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class controleGeral {
+    static ArrayList<aluno> alunos = new ArrayList<>();
+    static ArrayList<cursoEspecializacao> especializacoes = new ArrayList<>();
+    static ArrayList<cursoMestrado> mestrados = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Notas notasJoao = new Notas(7.0, 8.0, 6.0);
-        Notas notasMaria = new Notas(9.0, 9.5, 10.0);
+        cargaInicialDeDados();
 
+        int op;
+        do {
+            System.out.println("\n1-Listar Alunos | 2-Listar Cursos | 3-Busca | 0-Sair");
+            System.out.print("Opção: ");
+            op = sc.nextInt();
+            sc.nextLine();
 
-        aluno aluno1 = new aluno(1, 19, "leo", "111.222.333-44", "Rua A", true, notasJoao);
-        aluno aluno2 = new aluno(2, 18, "lavinia", "555.666.777-88", "Rua B", false, notasMaria);
+            switch (op) {
+                case 1 -> listarAlunos();
+                case 2 -> listarCursos();
+                case 3 -> buscarPorNome();
+                case 0 -> System.out.println("Saindo...");
+                default -> System.out.println("Opção inválida");
+            }
+        } while (op != 0);
+    }
 
-        ArrayList<aluno> listaAlunos = new ArrayList<>();
-        listaAlunos.add(aluno1);
-        listaAlunos.add(aluno2);
+    public static void cargaInicialDeDados() {
+        Notas n1 = new Notas(8, 9, 7);
+        Notas n2 = new Notas(5, 4, 6);
 
-        cursoEspecializacao cursoEsp = new cursoEspecializacao(
-                101, 360, 10, "POO", "Prof. Luiz Mario", 500.0, listaAlunos, true
-        );
+        aluno a1 = new aluno(1, 20, "Matheus", "12345678901", "Rua A", true, n1);
+        aluno a2 = new aluno(2, 22, "Maria", "10987654321", "Rua B", false, n2);
 
-        cursoEsp.setAdicionalDiploma();
-        System.out.println("Especialização");
-        System.out.println("Curso: " + cursoEsp.getAlunos().size() + " alunos.");
-        System.out.println("Adicional Diploma Calculado: R$ " + cursoEsp.getAdicionalDiploma());
+        alunos.add(a1);
+        alunos.add(a2);
 
-        System.out.println("Situação do João: " + aluno1.getSituacao());
+        especializacoes.add(new cursoEspecializacao(100, 360, 10, "Banco de Dados", "Prof. Silva", 1200, alunos, true));
+        especializacoes.add(new cursoEspecializacao(101, 400, 12, "Engenharia Web", "Prof. Souza", 1300, alunos, false));
 
-        cursoMestrado cursoMest = new cursoMestrado(
-                202, 1200, 5, "Mestrado em IA", "Dr. Robert", 0.0, listaAlunos, true
-        );
+        mestrados.add(new cursoMestrado(200, 1000, 20, "IA Aplicada", "Dr. Roberto", 0, alunos, true));
+        mestrados.add(new cursoMestrado(201, 1200, 22, "Ciência de Dados", "Dra. Ana", 0, alunos, true));
+    }
 
-        cursoMest.setAdicionalDiploma();
-        System.out.println("\nMestrado");
-        System.out.println("Adicional Diploma Calculado: R$ " + cursoMest.getAdicionalDiploma());
+    public static void listarAlunos() {
+        for (aluno a : alunos) {
+            System.out.println(a.toString());
+        }
+    }
+
+    public static void listarCursos() {
+        System.out.println("Especializações");
+        for (cursoEspecializacao c : especializacoes) {
+            c.setAdicionalDiploma();
+            System.out.println(c.toString());
+        }
+        System.out.println("Mestrados");
+        for (cursoMestrado c : mestrados) {
+            c.setAdicionalDiploma();
+            System.out.println(c.toString());
+        }
+    }
+
+    public static void buscarPorNome() {
+        System.out.print("Digite o nome do curso: ");
+        String busca = sc.nextLine();
+        boolean achou = false;
+
+        for (cursoEspecializacao c : especializacoes) {
+            if (c.getNome().equalsIgnoreCase(busca)) {
+                System.out.println("Encontrado: Curso de Especialização" + c.getNome());
+                achou = true;
+            }
+        }
+        for (cursoMestrado c : mestrados) {
+            if (c.getNome().equalsIgnoreCase(busca)) {
+                System.out.println("Encontrado: Curso de Mestrado" + c.getNome());
+                achou = true;
+            }
+        }
+        if (!achou) System.out.println("Curso não encontrado.");
     }
 }

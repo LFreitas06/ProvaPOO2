@@ -18,23 +18,24 @@ public class aluno {
         this.sexo = sexo;
         this.notas = notas;
     }
+
     public String getSituacao() {
-        double media = this.notas.getMedia();
-        if (media >= 6) {
+        if (this.notas.getMedia() >= 6) {
             return "Aprovado";
         } else {
             return "Reprovado";
         }
     }
 
-    public Notas getNotas() {
-        return notas;
-    }
-    public void setNotas(Notas notas) {
-        this.notas = notas;
-    }
     public String getNome() {
         return nome;
     }
+    public Notas getNotas() {
+        return notas;
+    }
 
+    @Override
+    public String toString() {
+        return "Aluno: " + nome + " | CPF: " + cpf + " | Situação: " + getSituacao() + "\n   " + notas.toString();
+    }
 }
